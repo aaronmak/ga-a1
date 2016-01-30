@@ -28,67 +28,79 @@ layerControl = L.control.layers({},{},{collapsed:false});
 function pop_Households5000month(feature, layer) {
 }
 
+// Households with more than 5000 a month income
 function doStyleHouseholds5000month(feature) {
-if (feature.properties.p_mt_5000 >= 0.236194 &&
-        feature.properties.p_mt_5000 <= 0.236194) {
+	if (feature.properties.p_mt_5000 === null) {
 
-    return {
-        color: '#000000',
-        weight: '1.04',
-        dashArray: '',
-        fillColor: '#edf8fb',
-        opacity: '0.71',
-        fillOpacity: '0.71',
-    }
-}
-if (feature.properties.p_mt_5000 >= 0.236194 &&
-        feature.properties.p_mt_5000 <= 0.444079) {
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: 'transparent',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
+	if (feature.properties.p_mt_5000 >= 0.236194 &&
+	        feature.properties.p_mt_5000 <= 0.236194) {
 
-    return {
-        color: '#000000',
-        weight: '1.04',
-        dashArray: '',
-        fillColor: '#b2e2e2',
-        opacity: '0.71',
-        fillOpacity: '0.71',
-    }
-}
-if (feature.properties.p_mt_5000 >= 0.444079 &&
-        feature.properties.p_mt_5000 <= 0.543947) {
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: '#edf8fb',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
+	if (feature.properties.p_mt_5000 >= 0.236194 &&
+	        feature.properties.p_mt_5000 <= 0.444079) {
 
-    return {
-        color: '#000000',
-        weight: '1.04',
-        dashArray: '',
-        fillColor: '#66c2a4',
-        opacity: '0.71',
-        fillOpacity: '0.71',
-    }
-}
-if (feature.properties.p_mt_5000 >= 0.543947 &&
-        feature.properties.p_mt_5000 <= 0.667126) {
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: '#b2e2e2',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
+	if (feature.properties.p_mt_5000 >= 0.444079 &&
+	        feature.properties.p_mt_5000 <= 0.543947) {
 
-    return {
-        color: '#000000',
-        weight: '1.04',
-        dashArray: '',
-        fillColor: '#2ca25f',
-        opacity: '0.71',
-        fillOpacity: '0.71',
-    }
-}
-if (feature.properties.p_mt_5000 >= 0.667126 &&
-        feature.properties.p_mt_5000 <= 0.759306) {
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: '#66c2a4',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
+	if (feature.properties.p_mt_5000 >= 0.543947 &&
+	        feature.properties.p_mt_5000 <= 0.667126) {
 
-    return {
-        color: '#000000',
-        weight: '1.04',
-        dashArray: '',
-        fillColor: '#006d2c',
-        opacity: '0.71',
-        fillOpacity: '0.71',
-    }
-}
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: '#2ca25f',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
+	if (feature.properties.p_mt_5000 >= 0.667126 &&
+	        feature.properties.p_mt_5000 <= 0.759306) {
+
+	    return {
+	        color: '#000000',
+	        weight: '1.04',
+	        dashArray: '',
+	        fillColor: '#006d2c',
+	        opacity: '0.71',
+	        fillOpacity: '0.71',
+	    }
+	}
 }
     var json_Households5000monthJSON = new L.geoJson(json_Households5000month, {
         onEachFeature: pop_Households5000month,
@@ -102,77 +114,90 @@ function pop_secondaryschs(feature, layer) {
     layer.bindPopup(popupContent);
 }
 
+// Secondary Schools
 function doStylesecondaryschs(feature) {
-if (feature.properties.awards_2013_pc_of_Max >= 0.15 &&
-        feature.properties.awards_2013_pc_of_Max <= 0.3) {
+	if (feature.properties.awards_2013_pc_of_Max == null) {
 
-    return {
-        radius: '4.0',
-        fillColor: '#d7191c',
-        color: '#000000',
-        weight: 0.0,
-        fillOpacity: '1.0',
-        opacity: '1.0',
-        dashArray: ''
-    }
-}
+	    return {
+	        radius: '4.0',
+	        fillColor: '#444',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 
-if (feature.properties.awards_2013_pc_of_Max >= 0.3 &&
-        feature.properties.awards_2013_pc_of_Max <= 0.4) {
+	if (feature.properties.awards_2013_pc_of_Max >= 0.15 &&
+	        feature.properties.awards_2013_pc_of_Max <= 0.3) {
 
-    return {
-        radius: '4.0',
-        fillColor: '#fdae61',
-        color: '#000000',
-        weight: 0.0,
-        fillOpacity: '1.0',
-        opacity: '1.0',
-        dashArray: ''
-    }
-}
+	    return {
+	        radius: '4.0',
+	        fillColor: '#d7191c',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 
-if (feature.properties.awards_2013_pc_of_Max >= 0.4 &&
-        feature.properties.awards_2013_pc_of_Max <= 0.5) {
+	if (feature.properties.awards_2013_pc_of_Max >= 0.3 &&
+	        feature.properties.awards_2013_pc_of_Max <= 0.4) {
 
-    return {
-        radius: '4.0',
-        fillColor: '#ffffc0',
-        color: '#000000',
-        weight: 0.0,
-        fillOpacity: '1.0',
-        opacity: '1.0',
-        dashArray: ''
-    }
-}
+	    return {
+	        radius: '4.0',
+	        fillColor: '#fdae61',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 
-if (feature.properties.awards_2013_pc_of_Max >= 0.5 &&
-        feature.properties.awards_2013_pc_of_Max <= 0.625) {
+	if (feature.properties.awards_2013_pc_of_Max >= 0.4 &&
+	        feature.properties.awards_2013_pc_of_Max <= 0.5) {
 
-    return {
-        radius: '4.0',
-        fillColor: '#a6d96a',
-        color: '#000000',
-        weight: 0.0,
-        fillOpacity: '1.0',
-        opacity: '1.0',
-        dashArray: ''
-    }
-}
+	    return {
+	        radius: '4.0',
+	        fillColor: '#ffffc0',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 
-if (feature.properties.awards_2013_pc_of_Max >= 0.625 &&
-        feature.properties.awards_2013_pc_of_Max <= 0.833333) {
+	if (feature.properties.awards_2013_pc_of_Max >= 0.5 &&
+	        feature.properties.awards_2013_pc_of_Max <= 0.625) {
 
-    return {
-        radius: '4.0',
-        fillColor: '#1a9641',
-        color: '#000000',
-        weight: 0.0,
-        fillOpacity: '1.0',
-        opacity: '1.0',
-        dashArray: ''
-    }
-}
+	    return {
+	        radius: '4.0',
+	        fillColor: '#a6d96a',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 
+	if (feature.properties.awards_2013_pc_of_Max >= 0.625 &&
+	        feature.properties.awards_2013_pc_of_Max <= 0.833333) {
+
+	    return {
+	        radius: '4.0',
+	        fillColor: '#1a9641',
+	        color: '#000000',
+	        weight: 0.0,
+	        fillOpacity: '1.0',
+	        opacity: '1.0',
+	        dashArray: ''
+	    }
+	}
 }
 var json_secondaryschsJSON = new L.geoJson(json_secondaryschs, {
     onEachFeature: pop_secondaryschs,
@@ -184,6 +209,9 @@ var json_secondaryschsJSON = new L.geoJson(json_secondaryschs, {
 
 bounds_group.addLayer(json_secondaryschsJSON);
 feature_group.addLayer(json_secondaryschsJSON);
+
+
+
 function pop_CyclingPath(feature, layer) {
 }
 
@@ -217,9 +245,24 @@ function doStyleNumberofStudentCareCentersinArea() {
         weight: 0.0,
         opacity: 1.0,
         dashArray: '',
-        fillOpacity: 1.0
+        fillOpacity: 0.75
     }
 }
+
+// function doStyleNumberofStudentCareCentersinArea(feature) {
+//     if (feature.properties.PNTCNT === null) {
+//       return {
+// 					radius: 4.0,
+// 	        fillColor: '#FFF',
+// 	        color: '#000000',
+// 	        weight: 0.0,
+// 	        opacity: 1.0,
+// 	        dashArray: '',
+// 	        fillOpacity: 0.75
+// 			}
+// 		}
+// }
+
 function doPointToLayerNumberofStudentCareCentersinArea(feature, latlng) {
     return L.circleMarker(latlng, doStyleNumberofStudentCareCentersinArea())
 }
