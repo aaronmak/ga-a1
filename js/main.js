@@ -115,7 +115,7 @@ function doStyleHouseholds5000month(feature) {
 bounds_group.addLayer(json_Households5000monthJSON);
 feature_group.addLayer(json_Households5000monthJSON);
 function pop_secondaryschs(feature, layer) {
-    var popupContent = '<table><tr><th scope="row">Awards %</th><td>' + '&nbsp;' + Autolinker.link(String(feature.properties['awards_2013_pc_of_Max'])) + '</td></tr><tr><th scope="row">School Name</th><td>' + '&nbsp;' + Autolinker.link(String(feature.properties['all_sch_15'])) + '</td></tr></table>';
+    var popupContent = '<table><tr><th scope="row">Awards %</th><td>' + '&nbsp;' + Autolinker.link(String(feature.properties['awards_2013_pc_of_Max'])) + '</td></tr><tr><th scope="row">School Name</th><td>' + '&nbsp;' + toTitleCase(Autolinker.link(String(feature.properties['all_sch_15']))) + '</td></tr></table>';
     layer.bindPopup(popupContent);
 }
 
