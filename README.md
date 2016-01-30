@@ -17,3 +17,43 @@ covered linkways, bus routes
 
 ## A choropleth map showing the spatial pattern of a selected theme.
 income levels of neighborhood
+
+## MARKING SCHEME
+
+## Map Layers (50)
+
+A base map by consume a web map service.
+
+A point symbol map showing the location of a theme based on its qualitative values.
+
+A proportional symbol map showing the qualitative values of the point data layer.
+
+A line symbol map showing the linear patterns
+
+A choropleth map showing the spatial pattern of a selected theme.
+
+## GeoWeb Map User-Interface (20)
+
+Navigation control
+
+Layer groups and layers control
+
+Scale control
+
+Popup control
+
+## Story-telling (10)
+
+## Bonus (20)
+
+Dynamic legend
+
+Provision to upload new geospatial data
+
+Variables selection for choropleth mapping
+
+Colour palate selection
+
+Marker selection
+
+any others

@@ -1,7 +1,7 @@
 var json_secondaryschs={
 "type": "FeatureCollection",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-                                                                                
+
 "features": [
 { "type": "Feature", "properties": { "awards_2013_pc_of_Max": 0.350000, "all_sch_15": "ADMIRALTY SECONDARY SCHOOL" }, "geometry": { "type": "Point", "coordinates": [ 103.802398, 1.445891 ] } },
 { "type": "Feature", "properties": { "awards_2013_pc_of_Max": 0.300000, "all_sch_15": "AHMAD IBRAHIM SECONDARY SCHOOL" }, "geometry": { "type": "Point", "coordinates": [ 103.829715, 1.436062 ] } },

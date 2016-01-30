@@ -116,7 +116,7 @@ function pop_secondaryschs(feature, layer) {
 
 // Secondary Schools
 function doStylesecondaryschs(feature) {
-	if (feature.properties.awards_2013_pc_of_Max == null) {
+	if (feature.properties.awards_2013_pc_of_Max === null) {
 
 	    return {
 	        radius: '4.0',
@@ -210,8 +210,7 @@ var json_secondaryschsJSON = new L.geoJson(json_secondaryschs, {
 bounds_group.addLayer(json_secondaryschsJSON);
 feature_group.addLayer(json_secondaryschsJSON);
 
-
-
+//Cycling Path
 function pop_CyclingPath(feature, layer) {
 }
 
@@ -232,42 +231,46 @@ layerOrder[layerOrder.length] = json_CyclingPathJSON;
 stackLayers();
 bounds_group.addLayer(json_CyclingPathJSON);
 feature_group.addLayer(json_CyclingPathJSON);
+
+
 function pop_NumberofStudentCareCentersinArea(feature, layer) {
     var popupContent = '<table><tr><th scope="row">PLN_AREA_N</th><td>' + Autolinker.link(String(feature.properties['PLN_AREA_N'])) + '</td></tr></table>';
     layer.bindPopup(popupContent);
 }
 
-function doStyleNumberofStudentCareCentersinArea() {
-    return {
-        radius: 4.0,
-        fillColor: '#dc5d87',
+function doStyleNumberofStudentCareCentersinArea(feature) {
+    var colorOfProportionalSymbol = '#dc5d87';
+    var baseRadius = 1.0;
+    if (feature.properties.count === null) {
+      return {
+					radius: 4.0,
+	        fillColor: 'transparent',
+	        color: '#000000',
+	        weight: 0.0,
+	        opacity: 1.0,
+	        dashArray: '',
+	        fillOpacity: 0.75
+			}
+		} else {
+      return {
+        radius: baseRadius*feature.properties.count,
+        fillColor: colorOfProportionalSymbol,
         color: '#000000',
         weight: 0.0,
         opacity: 1.0,
         dashArray: '',
         fillOpacity: 0.75
+      }
     }
+
 }
 
-// function doStyleNumberofStudentCareCentersinArea(feature) {
-//     if (feature.properties.PNTCNT === null) {
-//       return {
-// 					radius: 4.0,
-// 	        fillColor: '#FFF',
-// 	        color: '#000000',
-// 	        weight: 0.0,
-// 	        opacity: 1.0,
-// 	        dashArray: '',
-// 	        fillOpacity: 0.75
-// 			}
-// 		}
-// }
-
 function doPointToLayerNumberofStudentCareCentersinArea(feature, latlng) {
-    return L.circleMarker(latlng, doStyleNumberofStudentCareCentersinArea())
+    return L.circleMarker(latlng, doStyleNumberofStudentCareCentersinArea(feature))
 }
 var json_NumberofStudentCareCentersinAreaJSON = new L.geoJson(json_NumberofStudentCareCentersinArea, {
     onEachFeature: pop_NumberofStudentCareCentersinArea,
+    style: doStyleNumberofStudentCareCentersinArea,
     pointToLayer: doPointToLayerNumberofStudentCareCentersinArea
     });
 layerOrder[layerOrder.length] = json_NumberofStudentCareCentersinAreaJSON;
