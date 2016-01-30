@@ -1,3 +1,8 @@
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 var map = L.map('map', {
     zoomControl:true, maxZoom:19, minZoom:6
 }).fitBounds([[1.3502390361,103.728959122],[1.50558503756,103.966248283]]);
@@ -110,7 +115,7 @@ function doStyleHouseholds5000month(feature) {
 bounds_group.addLayer(json_Households5000monthJSON);
 feature_group.addLayer(json_Households5000monthJSON);
 function pop_secondaryschs(feature, layer) {
-    var popupContent = '<table><tr><th scope="row">awards_2013_pc_of_Max</th><td>' + Autolinker.link(String(feature.properties['awards_2013_pc_of_Max'])) + '</td></tr><tr><th scope="row">all_sch_15</th><td>' + Autolinker.link(String(feature.properties['all_sch_15'])) + '</td></tr></table>';
+    var popupContent = '<table><tr><th scope="row">Awards %</th><td>' + '&nbsp;' + Autolinker.link(String(feature.properties['awards_2013_pc_of_Max'])) + '</td></tr><tr><th scope="row">School Name</th><td>' + '&nbsp;' + Autolinker.link(String(feature.properties['all_sch_15'])) + '</td></tr></table>';
     layer.bindPopup(popupContent);
 }
 
@@ -234,7 +239,7 @@ feature_group.addLayer(json_CyclingPathJSON);
 
 
 function pop_NumberofStudentCareCentersinArea(feature, layer) {
-    var popupContent = '<table><tr><th scope="row">PLN_AREA_N</th><td>' + Autolinker.link(String(feature.properties['PLN_AREA_N'])) + '</td></tr></table>';
+    var popupContent = '<table><tr><th scope="row">Area Name: </th><td>' + '&nbsp;' + toTitleCase(Autolinker.link(String(feature.properties['PLN_AREA_N']))) + '<tr><th scope="row">Number of Student Care Centers:</th><td>' + '&nbsp;' + toTitleCase(Autolinker.link(String(feature.properties['count']))) + '</td></tr></table>';
     layer.bindPopup(popupContent);
 }
 
@@ -280,8 +285,8 @@ feature_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 raster_group.addTo(map);
 feature_group.addTo(map);
 var baseMaps = {
-    'OSM Standard': basemap
+
 };
-    L.control.layers(baseMaps,{'<img src="legend/NumberofStudentCareCentersinArea.png" /> Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON,'<img src="legend/CyclingPath.png" /> CyclingPath': json_CyclingPathJSON,'secondary_schs<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_015030.png" />  0.15 - 0.30 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_030040.png" />  0.30 - 0.40 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_040050.png" />  0.40 - 0.50 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_050062.png" />  0.50 - 0.62 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_062083.png" />  0.62 - 0.83 <br />': json_secondaryschsJSON,'Households >5000/month<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0236202362.png" />  0.2362 - 0.2362 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0236204441.png" />  0.2362 - 0.4441 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0444105439.png" />  0.4441 - 0.5439 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0543906671.png" />  0.5439 - 0.6671 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0667107593.png" />  0.6671 - 0.7593 <br />': json_Households5000monthJSON},{collapsed:false}).addTo(map);
+    L.control.layers(baseMaps,{'<img src="legend/NumberofStudentCareCentersinArea.png" /> Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON,'<img src="legend/CyclingPath.png" /> Cycling Path': json_CyclingPathJSON,'Secondary Schools Award Score<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_015030.png" />  0.15 - 0.30 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_030040.png" />  0.30 - 0.40 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_040050.png" />  0.40 - 0.50 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_050062.png" />  0.50 - 0.62 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/secondaryschs_062083.png" />  0.62 - 0.83 <br />': json_secondaryschsJSON,'% of Households earning > $5000/month<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0236202362.png" />  0.2362 - 0.2362 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0236204441.png" />  0.2362 - 0.4441 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0444105439.png" />  0.4441 - 0.5439 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0543906671.png" />  0.5439 - 0.6671 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Households5000month_0667107593.png" />  0.6671 - 0.7593 <br />': json_Households5000monthJSON},{collapsed:false}).addTo(map);
 L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
 stackLayers();

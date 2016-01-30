@@ -22,15 +22,15 @@ income levels of neighborhood
 
 ## Map Layers (50)
 
-A base map by consume a web map service.
+<!-- A base map by consume a web map service.  -->
 
-A point symbol map showing the location of a theme based on its qualitative values.
+<!-- A point symbol map showing the location of a theme based on its qualitative values. -->
 
-A proportional symbol map showing the qualitative values of the point data layer.
+<!-- A proportional symbol map showing the qualitative values of the point data layer. -->
 
-A line symbol map showing the linear patterns
+<!-- A line symbol map showing the linear patterns -->
 
-A choropleth map showing the spatial pattern of a selected theme.
+<!-- A choropleth map showing the spatial pattern of a selected theme. -->
 
 ## GeoWeb Map User-Interface (20)
 
@@ -38,7 +38,7 @@ Navigation control
 
 Layer groups and layers control
 
-Scale control
+<!-- Scale control -->
 
 Popup control
 
