@@ -13,7 +13,7 @@ Show all secondary schools and type of schools.
 after school care services per area
 
 ## A line symbol map showing the linear patterns
-covered linkways, bus routes
+Straight line distance from each school to nearest MRT
 
 ## A choropleth map showing the spatial pattern of a selected theme.
 income levels of neighborhood
@@ -34,7 +34,7 @@ income levels of neighborhood
 
 ## GeoWeb Map User-Interface (20)
 
-Navigation control
+<!-- Navigation control -->
 
 Layer groups and layers control
 
