@@ -34,6 +34,8 @@ function restackLayers() {
 map.on('overlayadd', restackLayers);
 layerControl = L.control.layers({},{},{collapsed:false});
 function pop_HouseholdsIncome(feature, layer) {
+  var popupContent = toTitleCase(Autolinker.link(String(feature.properties['PLN_AREA_N'])));
+  layer.bindPopup(popupContent);
 }
 
 // Households with more than 5000 a month income
@@ -110,11 +112,11 @@ function doStyleHouseholdsIncome(feature) {
 	    }
 	}
 }
-    var json_HouseholdsIncomeJSON = new L.geoJson(json_HouseholdsIncome, {
-        onEachFeature: pop_HouseholdsIncome,
-        style: doStyleHouseholdsIncome
-    });
-    layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
+var json_HouseholdsIncomeJSON = new L.geoJson(json_HouseholdsIncome, {
+    onEachFeature: pop_HouseholdsIncome,
+    style: doStyleHouseholdsIncome
+});
+layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
 bounds_group.addLayer(json_HouseholdsIncomeJSON);
 feature_group.addLayer(json_HouseholdsIncomeJSON);
 
