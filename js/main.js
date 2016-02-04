@@ -189,7 +189,7 @@ var trainDistLegend = L.control ({
 
 trainDistLegend.onAdd = function (map) {
   var div = L.DomUtil.create('div', 'train legend'),
-  distances = [0,552.5,962.1,1371.8,1781.5];
+  distances = [0,552.5,962.2,1371.8,1781.5];
 
   div.innerHTML += '<p>Nearest Train Station<br>from School (m)</p>'
 
