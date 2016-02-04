@@ -142,6 +142,7 @@ var studentCareLegend = L.control({position: 'bottomright'})
 
 studentCareLegend.onAdd = function (map) {
   var div = L.DomUtil.create('table', 'student-care legend'), number = [5, 10, 20, 30, 40];
+  div.innerHTML += '<tr><td colspan="2" style="font-weight: 700;">Number of Student<br> Care Centers in Area</td></tr>'
   for (var i=0; i<number.length; i++ ) {
     var width = Math.sqrt(number[i]*scaleFactor/Math.PI)*2;
     div.innerHTML +=
