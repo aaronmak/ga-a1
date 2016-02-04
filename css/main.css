@@ -283,6 +283,11 @@ textarea {
 
 #map { position:absolute; top:0; bottom:0; width:100%; }
 
+html.leaflet-container {
+  font-family: 'Lato', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+}
+
 .legend table,.legend th,.legend td {
    border: none;
 }
@@ -310,6 +315,7 @@ textarea {
 .student-care {
     line-height: 18px;
     color: #555;
+    font-size: 1rem;
 }
 .student-care i {
     float: right;
@@ -326,6 +332,7 @@ textarea {
 .income p, .train p , .school p {
   font-weight: 700;
   margin: 0 0 15px 0;
+  font-size: 1rem;
 }
 
 .income i, .train i, .school i {

@@ -42,11 +42,11 @@ Layer groups and layers control
 
 Popup control
 
-## Story-telling (10)
+<!-- ## Story-telling (10) -->
 
 ## Bonus (20)
 
-Dynamic legend
+<!-- Dynamic legend -->
 
 Provision to upload new geospatial data
 

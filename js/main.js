@@ -7,11 +7,10 @@ var map = L.map('map', {
     zoomControl:false, maxZoom:19, minZoom:6
 }).fitBounds([[1.3502390361,103.728959122],[1.50558503756,103.966248283]]);
 var hash = new L.Hash(map);
-var additional_attrib = '<a href="https://github.com/tomchadwin/qgis2web" target ="_blank">qgis2web</a>';
 var feature_group = new L.featureGroup([]);
 var bounds_group = new L.featureGroup([]);
 var basemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    attribution: ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
     maxZoom: 19
 });
 
@@ -284,18 +283,24 @@ function pop_TrainStations(feature, layer) {
 	layer.bindPopup(popupContent);
 }
 
-var trainMarker = L.ExtraMarkers.icon({
-  icon: 'fa-subway',
-  markerColor: 'red',
-  shape: 'square',
-  prefix: 'fa'
-});
+
+
+function trainMarker(feature) {
+  var marker = L.ExtraMarkers.icon({
+    icon: 'fa-subway',
+    markerColor: feature.properties.color,
+    shape: 'square',
+    prefix: 'fa'
+  });
+  return marker;
+}
 
 var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 	onEachFeature: pop_TrainStations,
 	pointToLayer: function (feature, latlng) {
+    console.log(feature.properties.color);
 		return L.marker(latlng, {
-			icon: trainMarker
+			icon: trainMarker(feature)
 		})
 	}
 });
@@ -321,7 +326,7 @@ L.control.zoom({
 // Search Address plugin
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Google(),
-    position: 'topcenter',
+    position: 'topright',
     showMarker: true,
     retainZoomLevel: false,
 }).addTo(map);
