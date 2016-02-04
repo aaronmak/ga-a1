@@ -125,7 +125,7 @@ var choroplethControl = L.control({position: 'topleft'});
 //   return div;
 // }
 
-// 
+//
 // var bindData = $("#chForm").my({ui:{
 //   "#colorScheme": { bind: "colorScheme" }
 // }},choloplethData);
@@ -141,7 +141,7 @@ layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
 // Student Care Centers in Area
 
 function pop_NumberofStudentCareCentersinArea(feature, layer) {
-    var popupContent = '<table><tr><th scope="row">Area Name: </th><td>' + '&nbsp;' + toTitleCase(Autolinker.link(String(feature.properties['PLN_AREA_N']))) + '<tr><th scope="row">Number of Student Care Centers:</th><td>' + '&nbsp;' + toTitleCase(Autolinker.link(String(feature.properties['count']))) + '</td></tr></table>';
+    var popupContent = '<table><tr><th scope="row">Area Name </th><td>' + toTitleCase(Autolinker.link(String(feature.properties['PLN_AREA_N']))) + '<tr><th scope="row">Number of Student Care Centers</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['count']))) + '</td></tr></table>';
     layer.bindPopup(popupContent);
 }
 

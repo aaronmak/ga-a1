@@ -299,7 +299,7 @@ html.leaflet-container {
 }
 
 .legend td {
-  text-align: center;
+  text-align: left;
   padding: 5px;
 }
 
