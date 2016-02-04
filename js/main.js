@@ -32,11 +32,10 @@ map.on('overlayadd', function(e) {
     studentCareLegend.addTo(map);
   }
   if (e.name === 'Secondary Schools') {
-    // add secondary school legend
     schoolLegend.addTo(map);
   }
-  if (e.name === 'Nearest Mrt from School') {
-    // add line legend
+  if (e.name === 'Distance of Nearest Train Station from School') {
+    trainDistLegend.addTo(map);
   }
 });
 
@@ -46,11 +45,10 @@ map.on('overlayremove', function(e) {
     studentCareLegend.removeFrom(map);
   }
   if (e.name === 'Secondary Schools') {
-    // remove secondary school legend
     schoolLegend.removeFrom(map);
   }
-  if (e.name === 'Nearest Mrt from School') {
-    // remove line legend
+  if (e.name === 'Distance of Nearest Train Station from School') {
+    trainDistLegend.removeFrom(map);
   }
 })
 
@@ -162,10 +160,10 @@ function pop_mrthublines(feature, layer) {
 }
 
 function getLineColor(num) {
-  return num >= 1781.46240351 ? '#d7191c' :
-         num >= 1371.80236311 ? '#fdae61' :
-         num >= 962.142322709 ? '#ffffc0' :
-         num >= 552.482282308 ? '#a6d96a' :
+  return num >= 1781.5 ? '#d7191c' :
+         num >= 1371.8 ? '#fdae61' :
+         num >= 962.2 ? '#ffffc0' :
+         num >= 552.5 ? '#a6d96a' :
                 '#1a9641';
 }
 
@@ -184,12 +182,31 @@ var exp_mrthublinesJSON = new L.geoJson(exp_mrthublines,{
 //add comment sign to hide this layer on the map in the initial view.
 // feature_group.addLayer(exp_mrthublinesJSON);
 
+//Train distance legend
+var trainDistLegend = L.control ({
+  position: 'bottomright'
+});
+
+trainDistLegend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'train legend'),
+  distances = [0,552.5,962.1,1371.8,1781.5];
+
+  div.innerHTML += '<p>Nearest Train Station<br>from School (m)</p>'
+
+  for (i=0;i<distances.length;i++) {
+    div.innerHTML +=
+    '<i style="background:' + getLineColor(distances[i]+0.01) + '"></i> ' +
+          distances[i] + (distances[i + 1] ? '&ndash;' + distances[i + 1] + '<br>' : '+');
+  }
+  return div;
+}
+
+// Secondary schools
+
 function pop_secondaryschwmrt(feature, layer) {
 	var popupContent = '<table><tr><th scope="row">School Name</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['all_sch_15']))) + '</td></tr><tr><th scope="row">Address</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['address']))) + '</td></tr><tr><th scope="row">Postal Code</th><td>' + Autolinker.link(String(feature.properties['postal_cod'])) + '</td></tr><tr><th scope="row">Integrated Program?</th><td>' + Autolinker.link(String(feature.properties['int_prog'])) + '</td></tr><tr><th scope="row">Independent School?</th><td>' + Autolinker.link(String(feature.properties['ind_prog'])) + '</td></tr><tr><th scope="row">Autonomous School?</th><td>' + Autolinker.link(String(feature.properties['auto_sch'])) + '</td></tr><tr><th scope="row">Special Assistance Plan School?</th><td>' + Autolinker.link(String(feature.properties['sp_a_prog'])) + '</td></tr><tr><th scope="row">Distinctive Programmes</th><td>' + Autolinker.link(String(feature.properties['dist_prog'])) + '</td></tr><tr><th scope="row">Awards Score</th><td>' + Autolinker.link(String(feature.properties['awards_2_4'])) + '</td></tr><tr><th scope="row">Nearest Train Station</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['nearestMRT']))) + '</td></tr><tr><th scope="row">Meters to Train Station</th><td>' + Autolinker.link(String(feature.properties['nearestM_1'])) + '</td></tr></table>';
 	layer.bindPopup(popupContent);
 }
-
-// Secondary schools
 
 function getSchColor(num) {
   return num >= 0.625 ? '#1a9641' :
@@ -233,7 +250,6 @@ schoolLegend.onAdd = function (map) {
   div.innerHTML += '<p>School Award Score</p>'
 
   for (i=0;i<scores.length;i++) {
-    console.log(getSchColor(scores[i]+1));
     div.innerHTML +=
     '<i style="background:' + getSchColor(scores[i]+0.01) + '"></i> ' +
           scores[i] + (scores[i + 1] ? '&ndash;' + scores[i + 1] + '<br>' : '+');
@@ -267,7 +283,7 @@ var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 var baseMaps = {
 
 };
-L.control.layers(baseMaps,{"Train Stations": exp_TrainStationsJSON,"Secondary Schools": exp_secondaryschwmrtJSON,"Nearest Mrt from School": exp_mrthublinesJSON,'Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON, '% of Households earning > $5000/month': json_HouseholdsIncomeJSON},{collapsed:false, position: 'topleft'}).addTo(map);
+L.control.layers(baseMaps,{"Train Stations": exp_TrainStationsJSON,"Secondary Schools": exp_secondaryschwmrtJSON,"Distance of Nearest Train Station from School": exp_mrthublinesJSON,'Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON, '% of Households earning > $5000/month': json_HouseholdsIncomeJSON},{collapsed:false, position: 'topleft'}).addTo(map);
 
 L.control.scale({options: {position: 'bottomright', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
 
