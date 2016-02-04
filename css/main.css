@@ -316,3 +316,21 @@ textarea {
     opacity: 0.7;
     border-radius: 50%;
 }
+
+.school {
+  line-height: 18px;
+  color: #555;
+}
+
+.school p {
+  font-weight: 700;
+  margin: 0 0 15px 0;
+}
+
+.school i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}

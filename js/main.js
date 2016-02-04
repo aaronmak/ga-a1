@@ -27,16 +27,30 @@ function stackLayers() {
 }
 
 map.on('overlayadd', function(e) {
-  console.log(e.name + 'is added.');
+  console.log(e.name + ' is added.');
   if (e.name === 'Number of Student Care Centers in Area') {
     studentCareLegend.addTo(map);
+  }
+  if (e.name === 'Secondary Schools') {
+    // add secondary school legend
+    schoolLegend.addTo(map);
+  }
+  if (e.name === 'Nearest Mrt from School') {
+    // add line legend
   }
 });
 
 map.on('overlayremove', function(e) {
-  console.log(e.name + 'is removed.');
+  console.log(e.name + ' is removed.');
   if (e.name === 'Number of Student Care Centers in Area') {
     studentCareLegend.removeFrom(map);
+  }
+  if (e.name === 'Secondary Schools') {
+    // remove secondary school legend
+    schoolLegend.removeFrom(map);
+  }
+  if (e.name === 'Nearest Mrt from School') {
+    // remove line legend
   }
 })
 
@@ -72,7 +86,7 @@ var json_HouseholdsIncomeJSON = new L.geoJson(json_HouseholdsIncome, {
 });
 layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
 bounds_group.addLayer(json_HouseholdsIncomeJSON);
-feature_group.addLayer(json_HouseholdsIncomeJSON);
+// feature_group.addLayer(json_HouseholdsIncomeJSON);
 
 // Student Care Centers in Area
 
@@ -181,7 +195,7 @@ function getSchColor(num) {
          num >= 0.5 ? '#a6d96a' :
          num >= 0.4 ? '#ffffc0' :
          num >= 0.3 ? '#fdae61' :
-         num >= 0.15 ? '#d7191c' :
+         num >= 0 ? '#d7191c' :
                        'grey';
 }
 
@@ -204,6 +218,27 @@ function doStylesecondaryschwmrt(feature) {
 
 //add comment sign to hide this layer on the map in the initial view.
 // feature_group.addLayer(exp_secondaryschwmrtJSON);
+
+// Secondary schoool legend
+var schoolLegend = L.control ({
+  position: 'bottomright'
+});
+
+schoolLegend.onAdd = function (map) {
+
+  var div = L.DomUtil.create('div', 'school legend'),
+  scores = [0,0.3,0.4,0.5,0.625]
+
+  div.innerHTML += '<p>School Award Score</p>'
+
+  for (i=0;i<scores.length;i++) {
+    console.log(getSchColor(scores[i]+1));
+    div.innerHTML +=
+    '<i style="background:' + getSchColor(scores[i]+0.01) + '"></i> ' +
+          scores[i] + (scores[i + 1] ? '&ndash;' + scores[i + 1] + '<br>' : '+');
+  }
+  return div;
+}
 
 function pop_TrainStations(feature, layer) {
 	var popupContent = toTitleCase(Autolinker.link(String(feature.properties['STN_NAM'])))
