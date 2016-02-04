@@ -37,6 +37,9 @@ map.on('overlayadd', function(e) {
   if (e.name === 'Distance of Nearest Train Station from School') {
     trainDistLegend.addTo(map);
   }
+  if (e.name === '% of Households earning > $5000/month') {
+    incomeLegend.addTo(map);
+  }
 });
 
 map.on('overlayremove', function(e) {
@@ -50,6 +53,9 @@ map.on('overlayremove', function(e) {
   if (e.name === 'Distance of Nearest Train Station from School') {
     trainDistLegend.removeFrom(map);
   }
+  if (e.name === '% of Households earning > $5000/month') {
+    incomeLegend.removeFrom(map);
+  }
 })
 
 layerControl = L.control.layers({},{},{collapsed:false});
@@ -60,17 +66,17 @@ function pop_HouseholdsIncome(feature, layer) {
 
 // Households with more than 5000 a month income
 
-function getColor(d) {
+function getIncomeColor(d) {
   return d === null ? 'transparent':
-         d > 0.667126 ? '#006d2c' :
-         d > 0.543947 ? '#2ca25f' :
-         d > 0.444079 ? '#66c2a4' :
-         d > 0.236194 ? '#b2e2e2' :
+         d > 0.667 ? '#006d2c' :
+         d > 0.543 ? '#2ca25f' :
+         d > 0.444 ? '#66c2a4' :
+         d > 0.236 ? '#b2e2e2' :
                         '#edf8fb';
 }
 function doStyleHouseholdsIncome(feature) {
   return {
-        fillColor: getColor(feature.properties.p_mt_5000),
+        fillColor: getIncomeColor(feature.properties.p_mt_5000),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -82,8 +88,24 @@ var json_HouseholdsIncomeJSON = new L.geoJson(json_HouseholdsIncome, {
     onEachFeature: pop_HouseholdsIncome,
     style: doStyleHouseholdsIncome
 });
+
+var incomeLegend = L.control({position: 'bottomright'});
+
+incomeLegend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'income legend'),
+  percent = [0,0.236, 0.444, 0.543, 0.667];
+  div.innerHTML += '<p>% of Households<br>earning >$5000/mth</p>'
+
+  for (i=0;i<percent.length;i++) {
+    div.innerHTML +=
+    '<i style="background:' + getIncomeColor(percent[i]+0.01) + '"></i> ' +
+          percent[i] + (percent[i + 1] ? '&ndash;' + percent[i + 1] + '<br>' : '+');
+  }
+  return div;
+}
+
 layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
-bounds_group.addLayer(json_HouseholdsIncomeJSON);
+// bounds_group.addLayer(json_HouseholdsIncomeJSON);
 // feature_group.addLayer(json_HouseholdsIncomeJSON);
 
 // Student Care Centers in Area
@@ -136,7 +158,7 @@ bounds_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 // feature_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 feature_group.addTo(map);
 
-var studentCareLegend = L.control({position: 'bottomright'})
+var studentCareLegend = L.control({position: 'bottomright'});
 
 studentCareLegend.onAdd = function (map) {
   var div = L.DomUtil.create('table', 'student-care legend'), number = [5, 10, 20, 30, 40];

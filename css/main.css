@@ -318,17 +318,17 @@ textarea {
     border-radius: 50%;
 }
 
-.train, .school {
+.income, .train, .school {
   line-height: 18px;
   color: #555;
 }
 
-.train p , .school p {
+.income p, .train p , .school p {
   font-weight: 700;
   margin: 0 0 15px 0;
 }
 
-.train i, .school i {
+.income i, .train i, .school i {
     width: 18px;
     height: 18px;
     float: left;
