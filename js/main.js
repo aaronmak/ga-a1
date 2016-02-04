@@ -25,13 +25,6 @@ function stackLayers() {
         map.addLayer(layerOrder[index]);
     }
 }
-// function restackLayers() {
-//     for (index = 0; index < layerOrder.length; index++) {
-//         layerOrder[index].bringToFront();
-//     }
-// }
-//
-// map.on('overlayadd', restackLayers);
 
 map.on('overlayadd', function(e) {
   console.log(e.name + 'is added.');
@@ -128,7 +121,7 @@ var json_NumberofStudentCareCentersinAreaJSON = new L.geoJson(json_NumberofStude
 layerOrder[layerOrder.length] = json_NumberofStudentCareCentersinAreaJSON;
 
 bounds_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
-feature_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
+// feature_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 feature_group.addTo(map);
 
 var studentCareLegend = L.control({position: 'bottomright'})
@@ -153,49 +146,29 @@ function pop_mrthublines(feature, layer) {
 	layer.bindPopup(popupContent);
 }
 
-function doStylemrthublines(feature) {
-	if (feature.properties.nearestM_1 >= 142.822241908 && feature.properties.nearestM_1 <= 552.482282308) {
-		return {
-			color: '#1a9641',
-			weight: '3',
-			opacity: '1.0',
-		}
-	}
-	if (feature.properties.nearestM_1 >= 552.482282308 && feature.properties.nearestM_1 <= 962.142322709) {
-		return {
-			color: '#a6d96a',
-			weight: '3',
-			opacity: '1.0',
-		}
-	}
-	if (feature.properties.nearestM_1 >= 962.142322709 && feature.properties.nearestM_1 <= 1371.80236311) {
-		return {
-			color: '#ffffc0',
-			weight: '3',
-			opacity: '1.0',
-		}
-	}
-	if (feature.properties.nearestM_1 >= 1371.80236311 && feature.properties.nearestM_1 <= 1781.46240351) {
-		return {
-			color: '#fdae61',
-			weight: '3',
-			opacity: '1.0',
-		}
-	}
-	if (feature.properties.nearestM_1 >= 1781.46240351 && feature.properties.nearestM_1 <= 2192.0) {
-		return {
-			color: '#d7191c',
-			weight: '3',
-			opacity: '1.0',
-		}
-	}
+function getLineColor(num) {
+  return num >= 1781.46240351 ? '#d7191c' :
+         num >= 1371.80236311 ? '#fdae61' :
+         num >= 962.142322709 ? '#ffffc0' :
+         num >= 552.482282308 ? '#a6d96a' :
+                '#1a9641';
 }
+
+function doStylemrthublines(feature) {
+  return {
+    color: getLineColor(feature.properties.nearestM_1),
+    weight: '3',
+    opacity: '1.0'
+  }
+}
+
 var exp_mrthublinesJSON = new L.geoJson(exp_mrthublines,{
 	onEachFeature: pop_mrthublines,
 	style: doStylemrthublines
 });
 //add comment sign to hide this layer on the map in the initial view.
-feature_group.addLayer(exp_mrthublinesJSON);
+// feature_group.addLayer(exp_mrthublinesJSON);
+
 function pop_secondaryschwmrt(feature, layer) {
 	var popupContent = '<table><tr><th scope="row">School Name</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['all_sch_15']))) + '</td></tr><tr><th scope="row">Address</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['address']))) + '</td></tr><tr><th scope="row">Postal Code</th><td>' + Autolinker.link(String(feature.properties['postal_cod'])) + '</td></tr><tr><th scope="row">Integrated Program?</th><td>' + Autolinker.link(String(feature.properties['int_prog'])) + '</td></tr><tr><th scope="row">Independent School?</th><td>' + Autolinker.link(String(feature.properties['ind_prog'])) + '</td></tr><tr><th scope="row">Autonomous School?</th><td>' + Autolinker.link(String(feature.properties['auto_sch'])) + '</td></tr><tr><th scope="row">Special Assistance Plan School?</th><td>' + Autolinker.link(String(feature.properties['sp_a_prog'])) + '</td></tr><tr><th scope="row">Distinctive Programmes</th><td>' + Autolinker.link(String(feature.properties['dist_prog'])) + '</td></tr><tr><th scope="row">Awards Score</th><td>' + Autolinker.link(String(feature.properties['awards_2_4'])) + '</td></tr><tr><th scope="row">Nearest Train Station</th><td>' + toTitleCase(Autolinker.link(String(feature.properties['nearestMRT']))) + '</td></tr><tr><th scope="row">Meters to Train Station</th><td>' + Autolinker.link(String(feature.properties['nearestM_1'])) + '</td></tr></table>';
 	layer.bindPopup(popupContent);
@@ -228,8 +201,10 @@ function doStylesecondaryschwmrt(feature) {
 		return L.circleMarker(latlng, doStylesecondaryschwmrt(feature))
 	}
 });
+
 //add comment sign to hide this layer on the map in the initial view.
-feature_group.addLayer(exp_secondaryschwmrtJSON);
+// feature_group.addLayer(exp_secondaryschwmrtJSON);
+
 function pop_TrainStations(feature, layer) {
 	var popupContent = toTitleCase(Autolinker.link(String(feature.properties['STN_NAM'])))
 	layer.bindPopup(popupContent);
@@ -251,7 +226,7 @@ var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 	}
 });
 //add comment sign to hide this layer on the map in the initial view.
-feature_group.addLayer(exp_TrainStationsJSON);
+// feature_group.addLayer(exp_TrainStationsJSON);
 
 var baseMaps = {
 
@@ -260,7 +235,6 @@ L.control.layers(baseMaps,{"Train Stations": exp_TrainStationsJSON,"Secondary Sc
 
 L.control.scale({options: {position: 'bottomright', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
 
-// stackLayers();
 
 L.control.pan({
   position: 'bottomleft'
