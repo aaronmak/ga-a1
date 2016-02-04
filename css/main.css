@@ -342,3 +342,11 @@ html.leaflet-container {
     margin-right: 8px;
     opacity: 0.7;
 }
+
+.leaflet-control input{
+  margin-bottom: 0;
+}
+
+.leaflet-control-layers-list {
+  margin-bottom: 0;
+}

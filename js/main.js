@@ -26,7 +26,6 @@ function stackLayers() {
 }
 
 map.on('overlayadd', function(e) {
-  console.log(e.name + ' is added.');
   if (e.name === 'Number of Student Care Centers in Area') {
     studentCareLegend.addTo(map);
   }
@@ -38,11 +37,11 @@ map.on('overlayadd', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.addTo(map);
+    choroplethControl.addTo(map);
   }
 });
 
 map.on('overlayremove', function(e) {
-  console.log(e.name + ' is removed.');
   if (e.name === 'Number of Student Care Centers in Area') {
     studentCareLegend.removeFrom(map);
   }
@@ -54,6 +53,7 @@ map.on('overlayremove', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.removeFrom(map);
+    choroplethControl.removeFrom(map);
   }
 })
 
@@ -73,6 +73,16 @@ function getIncomeColor(d) {
          d > 0.236 ? '#b2e2e2' :
                         '#edf8fb';
 }
+
+// function getIncomeColor(colorbrewer,colorScheme,classes,d) {
+//   return d === null ? 'transparent':
+//          d > 0.667 ? colorbrewer.colorScheme[classes][classes-1] :
+//          d > 0.543 ? colorbrewer.colorScheme[classes][classes-2] :
+//          d > 0.444 ? colorbrewer.colorScheme[classes][classes-3] :
+//          d > 0.236 ? colorbrewer.colorScheme[classes][classes-4] :
+//                         colorbrewer.colorScheme[classes][classes-5];
+// }
+
 function doStyleHouseholdsIncome(feature) {
   return {
         fillColor: getIncomeColor(feature.properties.p_mt_5000),
@@ -102,6 +112,27 @@ incomeLegend.onAdd = function (map) {
   }
   return div;
 }
+
+var choroplethControl = L.control({position: 'topleft'});
+
+// choroplethControl.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'choropleth control')
+//
+//   div.innerHTML += '<h5>Map Control</h5><br>';
+//
+//   div.innerHTML += '<label>Color</label><div id="chForm"><select id="colorScheme"><option value="Greens">Green</option><option value="Reds">Red</option><option value="Oranges">Orange</option><option value="Blues">Blue</option></select></div>'
+//
+//   return div;
+// }
+
+// 
+// var bindData = $("#chForm").my({ui:{
+//   "#colorScheme": { bind: "colorScheme" }
+// }},choloplethData);
+//
+// var choloplethData = {
+//   colorScheme: "Greens"
+// }
 
 layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
 // bounds_group.addLayer(json_HouseholdsIncomeJSON);
@@ -230,7 +261,8 @@ function pop_secondaryschwmrt(feature, layer) {
 }
 
 function getSchColor(num) {
-  return num >= 0.625 ? '#1a9641' :
+  return num === null ? 'grey':
+         num >= 0.625 ? '#1a9641' :
          num >= 0.5 ? '#a6d96a' :
          num >= 0.4 ? '#ffffc0' :
          num >= 0.3 ? '#fdae61' :
@@ -268,13 +300,16 @@ schoolLegend.onAdd = function (map) {
   var div = L.DomUtil.create('div', 'school legend'),
   scores = [0,0.3,0.4,0.5,0.625]
 
-  div.innerHTML += '<p>School Award Score</p>'
+  div.innerHTML += '<p>School Award Score</p>';
+  div.innerHTML += '<i style="background:' + getSchColor(null) + '"></i> ' + 'Special Programme School<br>';
 
   for (i=0;i<scores.length;i++) {
     div.innerHTML +=
     '<i style="background:' + getSchColor(scores[i]+0.01) + '"></i> ' +
-          scores[i] + (scores[i + 1] ? '&ndash;' + scores[i + 1] + '<br>' : '+');
+          scores[i] + (scores[i + 1] ? '&ndash;' + scores[i + 1] + '<br>' : '+<br><br>');
   }
+
+  div.innerHTML += '<span>School Award Score is calculated based<br>on 2013 School Excellence Awards</span>'
   return div;
 }
 
@@ -298,7 +333,6 @@ function trainMarker(feature) {
 var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 	onEachFeature: pop_TrainStations,
 	pointToLayer: function (feature, latlng) {
-    console.log(feature.properties.color);
 		return L.marker(latlng, {
 			icon: trainMarker(feature)
 		})
@@ -319,14 +353,14 @@ L.control.pan({
   position: 'bottomleft'
 }).addTo(map);
 
-L.control.zoom({
-  position: 'bottomleft'
-}).addTo(map);
-
 // Search Address plugin
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Google(),
     position: 'topright',
     showMarker: true,
     retainZoomLevel: false,
+}).addTo(map);
+
+L.control.zoom({
+  position: 'topright'
 }).addTo(map);
