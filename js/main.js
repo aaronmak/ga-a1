@@ -37,7 +37,7 @@ map.on('overlayadd', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.addTo(map);
-    choroplethControl.addTo(map);
+    // choroplethControl.addTo(map);
   }
 });
 
@@ -53,7 +53,7 @@ map.on('overlayremove', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.removeFrom(map);
-    choroplethControl.removeFrom(map);
+    // choroplethControl.removeFrom(map);
   }
 })
 
@@ -344,7 +344,7 @@ var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 var baseMaps = {
 
 };
-L.control.layers(baseMaps,{"Train Stations": exp_TrainStationsJSON,"Secondary Schools": exp_secondaryschwmrtJSON,"Distance of Nearest Train Station from School": exp_mrthublinesJSON,'Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON, '% of Households earning > $5000/month': json_HouseholdsIncomeJSON},{collapsed:false, position: 'topleft'}).addTo(map);
+L.control.layers(baseMaps,{'% of Households earning > $5000/month': json_HouseholdsIncomeJSON, "Train Stations": exp_TrainStationsJSON, "Distance of Nearest Train Station from School": exp_mrthublinesJSON,'Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON, "Secondary Schools": exp_secondaryschwmrtJSON},{collapsed:false, position: 'topleft'}).addTo(map);
 
 L.control.scale({options: {position: 'bottomright', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
 
@@ -361,6 +361,28 @@ new L.Control.GeoSearch({
     retainZoomLevel: false,
 }).addTo(map);
 
-L.control.zoom({
-  position: 'topright'
-}).addTo(map);
+// L.control.zoom({
+//   position: 'topright'
+// }).addTo(map);
+
+// File Upload Plugin
+//
+// L.Control.fileLayerLoad({
+//     // See http://leafletjs.com/reference.html#geojson-options
+//     layerOptions: {style: {color:'red'}},
+//     // Add to map after loading (default: true) ?
+//     addToMap: true,
+//     // File size limit in kb (default: 1024) ?
+//     fileSizeLimit: 1024,
+//     // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
+//     formats: [
+//         '.geojson',
+//         '.kml'
+//     ]
+// }).addTo(map);
+//
+// var fcontrol = L.Control.fileLayerLoad();
+// fcontrol.loader.on('data:loaded', function (e) {
+//     // Add to map layer switcher
+//     layerswitcher.addOverlay(e.layer, e.filename);
+// });
