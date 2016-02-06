@@ -4,16 +4,15 @@ function toTitleCase(str)
 }
 
 var map = L.map('map', {
-    zoomControl:false, maxZoom:19, minZoom:6
-}).fitBounds([[1.3502390361,103.728959122],[1.50558503756,103.966248283]]);
+    zoomControl:false, maxZoom:17, minZoom:11
+}).fitBounds([[1.470774832084756, 104.08848306516336],[1.158698700635265,103.60543572198932]]);
 var hash = new L.Hash(map);
 var feature_group = new L.featureGroup([]);
 var bounds_group = new L.featureGroup([]);
 var basemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
-    maxZoom: 19
+    maxZoom: 17
 });
-
 
 
 basemap.addTo(map);
@@ -37,7 +36,7 @@ map.on('overlayadd', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.addTo(map);
-    // choroplethControl.addTo(map);
+    // incomeDetailControl.addTo(map);
   }
 });
 
@@ -53,7 +52,7 @@ map.on('overlayremove', function(e) {
   }
   if (e.name === '% of Households earning > $5000/month') {
     incomeLegend.removeFrom(map);
-    // choroplethControl.removeFrom(map);
+    // incomeDetailControl.removeFrom(map);
   }
 })
 
@@ -113,26 +112,32 @@ incomeLegend.onAdd = function (map) {
   return div;
 }
 
-var choroplethControl = L.control({position: 'topleft'});
-
-// choroplethControl.onAdd = function(map) {
-//   var div = L.DomUtil.create('div', 'choropleth control')
-//
-//   div.innerHTML += '<h5>Map Control</h5><br>';
-//
-//   div.innerHTML += '<label>Color</label><div id="chForm"><select id="colorScheme"><option value="Greens">Green</option><option value="Reds">Red</option><option value="Oranges">Orange</option><option value="Blues">Blue</option></select></div>'
-//
-//   return div;
-// }
-
-//
-// var bindData = $("#chForm").my({ui:{
-//   "#colorScheme": { bind: "colorScheme" }
-// }},choloplethData);
-//
-// var choloplethData = {
+// var choroplethMap = {
 //   colorScheme: "Greens"
 // }
+//
+// var bindData = {
+//   data: {colorScheme: "" },
+//   init: function($node, runtime) {
+//     $node.html(
+//       '<h4>Income Control</h4>'+
+//       '<div><label>Color Scheme</label><select id="color"><option value="Greens">Greens</option><option value="Reds">Reds</option><option value="Blues">Blues</option><option value="Greys">Greys</option></select></div>'
+//     );
+//   },
+//   ui: {
+//     "#color": {bind: "colorScheme"}
+//   }
+// };
+//
+// var incomeDetailControl = L.control({position: 'topleft'});
+//
+// incomeDetailControl.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'income-detail-control');
+//   div.innerHTML += '<h5>Layer Control</h5><div id="form"></div>';
+//   return div;
+// }.done(bindForm());
+//
+// function bindForm() {$("#form").my(bindData, choroplethMap)};
 
 layerOrder[layerOrder.length] = json_HouseholdsIncomeJSON;
 // bounds_group.addLayer(json_HouseholdsIncomeJSON);
@@ -145,7 +150,7 @@ function pop_NumberofStudentCareCentersinArea(feature, layer) {
     layer.bindPopup(popupContent);
 }
 
-var colorOfProportionalSymbol = '#dc5d87';
+var colorOfProportionalSymbol = '#a22c6f';
 var scaleFactor = 50.0;
 
 function doStyleNumberofStudentCareCentersinArea(feature) {
@@ -184,7 +189,7 @@ var json_NumberofStudentCareCentersinAreaJSON = new L.geoJson(json_NumberofStude
     });
 layerOrder[layerOrder.length] = json_NumberofStudentCareCentersinAreaJSON;
 
-bounds_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
+// bounds_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 // feature_group.addLayer(json_NumberofStudentCareCentersinAreaJSON);
 feature_group.addTo(map);
 
@@ -222,7 +227,7 @@ function getLineColor(num) {
 function doStylemrthublines(feature) {
   return {
     color: getLineColor(feature.properties.nearestM_1),
-    weight: '3',
+    weight: '5',
     opacity: '1.0'
   }
 }
@@ -286,9 +291,7 @@ function doStylesecondaryschwmrt(feature) {
 		return L.circleMarker(latlng, doStylesecondaryschwmrt(feature))
 	}
 });
-
-//add comment sign to hide this layer on the map in the initial view.
-// feature_group.addLayer(exp_secondaryschwmrtJSON);
+feature_group.addLayer(exp_secondaryschwmrtJSON);
 
 // Secondary schoool legend
 var schoolLegend = L.control ({
@@ -309,9 +312,10 @@ schoolLegend.onAdd = function (map) {
           scores[i] + (scores[i + 1] ? '&ndash;' + scores[i + 1] + '<br>' : '+<br><br>');
   }
 
-  div.innerHTML += '<span>School Award Score is calculated based<br>on 2013 School Excellence Awards</span>'
+  div.innerHTML += '<span>School Award Score is calculated based<br>on <a target="_blank" href="https://ref.data.gov.sg/Metadata/SGMatadata.aspx?id=0337010000000013809C&mid=159254&t=TEXTUAL">2013 School Excellence Awards</a></span>'
   return div;
 }
+schoolLegend.addTo(map);
 
 function pop_TrainStations(feature, layer) {
 	var popupContent = toTitleCase(Autolinker.link(String(feature.properties['STN_NAM'])))
@@ -340,6 +344,16 @@ var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
 });
 //add comment sign to hide this layer on the map in the initial view.
 // feature_group.addLayer(exp_TrainStationsJSON);
+//Custom Layer control
+
+// var customLayerControl = L.control({position: 'topleft'});
+// customLayerControl.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'layer-control');
+//
+//   div.innerHTML += '<h3>Layer Control</h3><form class="layer-control-form"><label><input type="checkbox"  value="json_HouseholdsIncomeJSON"> % of Households earning > $5000/month</label><label><input type="checkbox" value="json_NumberofStudentCareCentersinAreaJSON"> Number of Student Care Centers in Area</label><label><input type="checkbox" value="exp_mrthublinesJSON"> Distance of Nearest Train Station from School</label><label><input type="checkbox" value="exp_secondaryschwmrtJSON">Secondary Schools</label><label><input type="checkbox" value="exp_TrainStationsJSON">Train Stations</label></form>';
+//   return div;
+// }
+// customLayerControl.addTo(map);
 
 var baseMaps = {
 
@@ -361,9 +375,9 @@ new L.Control.GeoSearch({
     retainZoomLevel: false,
 }).addTo(map);
 
-// L.control.zoom({
-//   position: 'topright'
-// }).addTo(map);
+L.control.zoom({
+  position: 'topright'
+}).addTo(map);
 
 // File Upload Plugin
 //
@@ -385,4 +399,17 @@ new L.Control.GeoSearch({
 // fcontrol.loader.on('data:loaded', function (e) {
 //     // Add to map layer switcher
 //     layerswitcher.addOverlay(e.layer, e.filename);
+// });
+
+//
+//
+// $( "input" ).click(function( event ) {
+//     layerClicked = window[event.target.value];
+//
+//         if (map.hasLayer(layerClicked)) {
+//             map.removeLayer(layerClicked);
+//         }
+//         else{
+//             map.addLayer(layerClicked);
+//         } ;
 // });

@@ -350,3 +350,22 @@ html.leaflet-container {
 .leaflet-control-layers-list {
   margin-bottom: 0;
 }
+
+/*.layer-control {
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 9;
+}*/
+
+th, td {
+  padding: 5px 10px;
+}
+
+tr:last-child td, tr:last-child th {
+  border-bottom: none;
+}
+
+.leaflet-popup-content table {
+  margin-bottom: 0;
+}
