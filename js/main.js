@@ -309,10 +309,10 @@ function getSchColor(num) {
 
 function doStylesecondaryschwmrt(feature) {
   return {
-    radius: '4.0',
+    radius: '5.0',
     fillColor: getSchColor(feature.properties.awards_2_4),
     color: '#000000',
-    weight: 1.0,
+    weight: 2.0,
     fillOpacity: '1.0',
     opacity: '1.0'
   }
