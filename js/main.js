@@ -14,8 +14,40 @@ var basemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 17
 });
 
+var providers = {};
 
-basemap.addTo(map);
+providers['OpenStreetMap_BlackAndWhite'] = {
+    title: 'osm bw',
+    icon: 'css/image/openstreetmap_blackandwhite.png',
+    layer: L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    })
+};
+
+providers['OpenStreetMap_Mapnik'] = {
+    title: 'osm',
+    icon: 'css/image/openstreetmap_mapnik.png',
+    layer: L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    })
+};
+
+providers['OpenStreetMap_DE'] = {
+    title: 'osm de',
+    icon: 'css/image/openstreetmap_de.png',
+    layer: L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    })
+}
+
+var layers = [];
+for (var providerId in providers) {
+    layers.push(providers[providerId]);
+}
+
 var layerOrder = new Array();
 function stackLayers() {
     for (index = 0; index < layerOrder.length; index++) {
@@ -359,6 +391,7 @@ var baseMaps = {
 
 };
 L.control.layers(baseMaps,{'% of Households earning > $5000/month': json_HouseholdsIncomeJSON, "Train Stations": exp_TrainStationsJSON, "Distance of Nearest Train Station from School": exp_mrthublinesJSON,'Number of Student Care Centers in Area': json_NumberofStudentCareCentersinAreaJSON, "Secondary Schools": exp_secondaryschwmrtJSON},{collapsed:false, position: 'topleft'}).addTo(map);
+L.control.iconLayers(layers,{position: 'topleft'}).addTo(map);
 
 L.control.scale({options: {position: 'bottomright', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
 
