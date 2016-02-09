@@ -4,4 +4,4 @@ In light of what the government constantly drums into our heads about every scho
 
 The application can be found running at [http://aaronmak.github.io/ga-a1]( http://aaronmak.github.io/ga-a1).
 
-![Overall Design](https://wiki.smu.edu.sg/1516t2is415g1/File%3AGeneral_Layout.png)
+![Overall Design](img/General_Layout.png)
